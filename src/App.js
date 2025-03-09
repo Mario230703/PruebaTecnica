@@ -6,14 +6,30 @@ import React, { useEffect, useState } from "react";
 function App() {
   //Definir columnas para DataTable
   const columns = [
-    { name: "Empresa", selector: (row) => row.nombre_empresa || "No especificado", sortable: true },
-    { name: "Área", selector: (row) => row.nombre_area || "No especificado", sortable: true },
-    { name: "Trabajador", selector: (row) => row.nombre_trabajador || "No registrado", sortable: true },
-    { name: "RUT", selector: (row) => row.rut_trabajador || "No registrado", sortable: true },
-    { name: "Edad", selector: (row) => row.edad || "No especificado", sortable: true, right: true },
-    { name: "Profesión", selector: (row) => row.profesion || "No especificado", sortable: true },
-    { name: "Cargo", selector: (row) => row.cargo || "No especificado", sortable: true },
-    { name: "Sueldo", selector: (row) => row.sueldo || "N/A", sortable: true, right: true },
+    { 
+      name: "Empresa", selector: (row) => row.nombre_empresa || "No especificado", sortable: true 
+    },
+    { 
+      name: "Área", selector: (row) => row.nombre_area || "No especificado", sortable: true 
+    },
+    { 
+      name: "Trabajador", selector: (row) => row.nombre_trabajador || "No registrado", sortable: true 
+    },
+    { 
+      name: "RUT", selector: (row) => row.rut_trabajador || "No registrado", sortable: true 
+    },
+    { 
+      name: "Edad", selector: (row) => row.edad || "No especificado", sortable: true, right: true 
+    },
+    { 
+      name: "Profesión", selector: (row) => row.profesion || "No especificado", sortable: true 
+    },
+    { 
+      name: "Cargo", selector: (row) => row.cargo || "No especificado", sortable: true 
+    },
+    { 
+      name: "Sueldo", selector: (row) => row.sueldo || "N/A", sortable: true, right: true 
+    },
   ];
 
   const [data, setData] = useState([]);
@@ -96,14 +112,23 @@ function App() {
     XLSX.writeFile(wb, "Datos_Filtrados.xlsx");
   };
 
+  const customStyles = {
+    headCells: {
+      style: {
+        fontWeight: "bold", // Hace el texto en la cabecera en negrita
+        backgroundColor: "#61CE70", // Color de fondo opcional
+        fontSize: "16px", // Tamaño de fuente opcional
+      },
+    },
+  };
+
   return (
     // Filtro de datos
-    <div>
-      <input
-        type="text"
-        placeholder="Buscar..."
-        value={search}
-        onChange={handleSearch}
+    <div class="container-fluid">
+    <br></br>
+    <div class="row">
+      <div class="col-md-3">
+      <input type="text" placeholder="Buscar..." value={search} onChange={handleSearch}
         style={{
           marginBottom: "10px",
           padding: "8px",
@@ -112,10 +137,13 @@ function App() {
           borderRadius: "5px",
         }}
       />
+      </div>
+      <div class="col-md-7">
 
+      </div>
+      <div class="col-md-2">
       {/*Boton exportar excel*/}
-      <button
-        onClick={exportToExcel}
+      <button onClick={exportToExcel}
         style={{
           marginBottom: "10px",
           marginLeft: "10px",
@@ -129,15 +157,15 @@ function App() {
       >
         Exportar a Excel
       </button>
-
-      {/* DataTable */}
-      <DataTable
-        title="Datos Combinados"
-        columns={columns}
-        data={filteredData}
-        progressPending={loading}
-        pagination
-      />
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          {/* DataTable */}
+          <DataTable title="ReSimple" columns={columns} data={filteredData} progressPending={loading} pagination customStyles={customStyles}/>
+        </div>
+      </div>
+      
     </div>
   );
 }
